@@ -5,7 +5,7 @@ define DoAudioTest(number, frequency, data) {
     Draw()
 
     # start sound at frequency with base amplitude
-    sound <- MakeSineWave(1000, frequency, 0.1)
+    sound <- MakeSineWave(frequency, 1000, 0.1)
     PlayBackground(sound)
 
     response <- WaitForListKeyPressWithTimeout(["a"], 1000, 1) # third param is unused
