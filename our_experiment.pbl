@@ -5,13 +5,9 @@ define DoAudioTest(number, frequency, data) {
     Draw()
 
     # start sound at frequency with base amplitude
-    sound <- MakeSineWave(
-        1000, # milliseconds
-        frequency, # manual says: good values should be between 100 and 2000, huh?
-        0.1 # should be less than one
-    )
+    sound <- MakeSineWave(1000, frequency, 0.1)
     PlayBackground(sound)
-    
+
     response <- WaitForListKeyPressWithTimeout(["a"], 1000, 1) # third param is unused
 
     # TODO
@@ -20,9 +16,9 @@ define DoAudioTest(number, frequency, data) {
     } else {
         # invalidate test
     }
-    
+
     Stop(sound) # forget this and pebl crashes
-    
+
     # TODO: geht so leider nicht, PEBL saugt
     #RandomizeTimer() # Seed RNG with the current time.
     #i <- RandomDiscrete(number)   # Generate a random number between 1 and number
@@ -34,17 +30,13 @@ define DoAudioTest(number, frequency, data) {
 
 # pebl prog entry point
 define Start(lParameter) { # param is mandatory
-  
+
     # Make initial objects needed for display.
-    gWindow <- MakeWindow("grey") 
+    gWindow <- MakeWindow("grey")
 
     # make ten test frequencies
     # 100Hz, 2100Hz, 4100Hz, 6100Hz, 8100Hz, 10100Hz, 12100Hz, 14100Hz, 16100Hz und 18100Hz
-    frequencies <- Sequence(
-        100,   # start value
-        18100, # end value (wtf, why not the item count)
-        2000   # step
-    )  
+    frequencies <- Sequence(100, 18100, 2000) # start, end, step
 
     # debug
     loop(freq, frequencies) {
@@ -70,17 +62,12 @@ define Start(lParameter) { # param is mandatory
     Hide(smiley) # HINT hides not yet, call draw to perform any graphical changes
     Hide(welcomeLabel)
     Draw()
-    
+
     # perform test sequence
     actualTest <- 1 # OMG program language starting at 1 WTF
     while (actualTest < 11) {
 
-        DoAudioTest(
-            actualTest,
-            Nth(frequencies, actualTest),
-            Nth(testData,    actualTest)
-        )
-
+        DoAudioTest(actualTest, Nth(frequencies, actualTest), Nth(testData, actualTest))
         actualTest <- actualTest + 1
     }
 
@@ -89,4 +76,3 @@ define Start(lParameter) { # param is mandatory
     Draw()
     Wait(100)
 }
-
