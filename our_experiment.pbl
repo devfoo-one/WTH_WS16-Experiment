@@ -1,0 +1,92 @@
+# one test run
+define DoAudioTest(number, frequency, data) {
+
+    confirmLabel <- EasyLabel("Test " + number + ": Press any key if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
+    Draw()
+
+    # start sound at frequency with base amplitude
+    sound <- MakeSineWave(
+        1000, # milliseconds
+        frequency, # manual says: good values should be between 100 and 2000, huh?
+        0.1 # should be less than one
+    )
+    PlayBackground(sound)
+    
+    response <- WaitForListKeyPressWithTimeout(["a"], 1000, 1) # third param is unused
+
+    # TODO
+    if (response == "a") {
+        # start the real test
+    } else {
+        # invalidate test
+    }
+    
+    Stop(sound) # forget this and pebl crashes
+    
+    # TODO: geht so leider nicht, PEBL saugt
+    #RandomizeTimer() # Seed RNG with the current time.
+    #i <- RandomDiscrete(number)   # Generate a random number between 1 and number
+    # get louder at timepoint # mit PEBL no chance
+
+    Hide(confirmLabel)
+    Draw()
+}
+
+# pebl prog entry point
+define Start(lParameter) { # param is mandatory
+  
+    # Make initial objects needed for display.
+    gWindow <- MakeWindow("grey") 
+
+    # make ten test frequencies
+    # 100Hz, 2100Hz, 4100Hz, 6100Hz, 8100Hz, 10100Hz, 12100Hz, 14100Hz, 16100Hz und 18100Hz
+    frequencies <- Sequence(
+        100,   # start value
+        18100, # end value (wtf, why not the item count)
+        2000   # step
+    )  
+
+    # debug
+    loop(freq, frequencies) {
+        Print(freq)
+    }
+
+    # make test data to be filled
+    testData <- Repeat(MakeCustomObject("JND"), 10)
+    loop(data, testData) {
+        data.jndTime <- 0  # assign defaulted property
+        Print(data) # debug
+    }
+
+    # splash screen
+    smiley <- MakeImage("smiley-big.png") # fuckin ugly smiley
+    AddObject(smiley, gWindow)
+    Move(smiley, gVideoWidth / 2, gVideoHeight / 2 - 100)
+
+    welcomeLabel <- EasyLabel("Press any key to start the tests", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
+    Draw()
+    WaitForAnyKeyPress()
+
+    Hide(smiley) # HINT hides not yet, call draw to perform any graphical changes
+    Hide(welcomeLabel)
+    Draw()
+    
+    # perform test sequence
+    actualTest <- 1 # OMG program language starting at 1 WTF
+    while (actualTest < 11) {
+
+        DoAudioTest(
+            actualTest,
+            Nth(frequencies, actualTest),
+            Nth(testData,    actualTest)
+        )
+
+        actualTest <- actualTest + 1
+    }
+
+    # epilog
+    goodbyeLabel <- EasyLabel("Thanks for participation", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
+    Draw()
+    Wait(100)
+}
+
