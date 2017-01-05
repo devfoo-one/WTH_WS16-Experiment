@@ -78,7 +78,8 @@ define Start(lParameter) { # param is mandatory
 
     # perform testing test sequence
     testTest <- 12
-    DoAudioTest(testTest, Nth(gTestData, testTest))
+    dummyData <- MakeCustomObject(„dummy“)
+    DoAudioTest(testTest, dummyData)
 
     # perform main test sequence
     actualTest <- 1 # OMG program language starting at 1 WTF
