@@ -22,7 +22,7 @@ define DoAudioTest(number, frequency, data) {
     startTime <- GetTime()
     PlayBackground(sound)
 
-    response <- WaitForListKeyPressWithTimeout(["a"], 1000, 1) # third param is unused
+    response <- WaitForListKeyPressWithTimeout(["a"], 30000, 1) # third param is unused
 
     if (response == "a") {
         endTime <- GetTime()
