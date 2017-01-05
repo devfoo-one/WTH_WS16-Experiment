@@ -1,5 +1,5 @@
 # one test run
-define DoAudioTest(number, frequency, data) {
+define DoAudioTest(number, data) {
 
     # setup audio file for test
     sound <- LoadSound("sine_100Hz.wav") # dont know how to define undefineds
@@ -50,15 +50,6 @@ define Start(lParameter) { # param is mandatory
     # Make initial objects needed for display.
     gWindow <- MakeWindow("grey")
 
-    # make ten test frequencies
-    # 100Hz, 2100Hz, 4100Hz, 6100Hz, 8100Hz, 10100Hz, 12100Hz, 14100Hz, 16100Hz und 18100Hz
-    frequencies <- Sequence(100, 18100, 2000) # start, end, step
-
-    # debug
-    loop(freq, frequencies) {
-        Print(freq)
-    }
-
     # make test data to be filled
     gTestData <- Repeat(MakeCustomObject("JND"), 10)
     loop(data, gTestData) {
@@ -82,8 +73,7 @@ define Start(lParameter) { # param is mandatory
     # perform test sequence
     actualTest <- 1 # OMG program language starting at 1 WTF
     while (actualTest < 11) {
-
-        DoAudioTest(actualTest, Nth(frequencies, actualTest), Nth(gTestData, actualTest))
+        DoAudioTest(actualTest, Nth(gTestData, actualTest))
         actualTest <- actualTest + 1
     }
 
