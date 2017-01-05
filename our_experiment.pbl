@@ -1,18 +1,33 @@
 # one test run
 define DoAudioTest(number, frequency, data) {
 
-    confirmLabel <- EasyLabel("Test " + number + ": Press any key if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
+    # setup audio file for test
+    if (number ==  1) { sound <- LoadSound("sine_100Hz.wav") }
+    if (number ==  2) { sound <- LoadSound("sine_500Hz.wav") }
+    if (number ==  3) { sound <- LoadSound("sine_900Hz.wav") }
+    if (number ==  4) { sound <- LoadSound("sine_1300Hz.wav") }
+    if (number ==  5) { sound <- LoadSound("sine_1700Hz.wav") }
+    if (number ==  6) { sound <- LoadSound("sine_2100Hz.wav") }
+    if (number ==  7) { sound <- LoadSound("sine_2500Hz.wav") }
+    if (number ==  8) { sound <- LoadSound("sine_2900Hz.wav") }
+    if (number ==  9) { sound <- LoadSound("sine_3300Hz.wav") }
+    if (number == 10) { sound <- LoadSound("sine_3700Hz.wav") }
+    if (number == 11) { sound <- LoadSound("sine_4100Hz.wav") }
+     
+
+    confirmLabel <- EasyLabel("Test " + number + ": Press A if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
     Draw()
 
     # start sound at frequency with base amplitude
-    sound <- MakeSineWave(frequency, 1000, 0.1)
+    startTime <- GetTime()
     PlayBackground(sound)
 
     response <- WaitForListKeyPressWithTimeout(["a"], 1000, 1) # third param is unused
 
-    # TODO
     if (response == "a") {
-        # start the real test
+        endTime <- GetTime()
+        data.jndTime <- endTime - startTime
+        Print(data.jndTime)
     } else {
         # invalidate test
     }
@@ -44,8 +59,8 @@ define Start(lParameter) { # param is mandatory
     }
 
     # make test data to be filled
-    testData <- Repeat(MakeCustomObject("JND"), 10)
-    loop(data, testData) {
+    gTestData <- Repeat(MakeCustomObject("JND"), 10)
+    loop(data, gTestData) {
         data.jndTime <- 0  # assign defaulted property
         Print(data) # debug
     }
@@ -67,7 +82,7 @@ define Start(lParameter) { # param is mandatory
     actualTest <- 1 # OMG program language starting at 1 WTF
     while (actualTest < 11) {
 
-        DoAudioTest(actualTest, Nth(frequencies, actualTest), Nth(testData, actualTest))
+        DoAudioTest(actualTest, Nth(frequencies, actualTest), Nth(gTestData, actualTest))
         actualTest <- actualTest + 1
     }
 
