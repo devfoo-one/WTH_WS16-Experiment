@@ -14,9 +14,15 @@ define DoAudioTest(number, data) {
     if (number ==  9) { sound <- LoadSound("sine_3300Hz.wav") }
     if (number == 10) { sound <- LoadSound("sine_3700Hz.wav") }
     if (number == 11) { sound <- LoadSound("sine_4100Hz.wav") }
+    if (number == 12) { sound <- LoadSound("test_500Hz.wav") }
 
-    confirmLabel <- EasyLabel("Test " + number + ": Press A if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
+if (number == 12) {
+    confirmLabel <- EasyLabel("Test run: Press A if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
     Draw()
+}else {
+    confirmLabel <- EasyLabel("Test " + number + ": Press A if you hear a change in amplitude (volume)", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
+    Draw()
+}
 
     # start sound at frequency with base amplitude
     startTime <- GetTime()
@@ -70,7 +76,11 @@ define Start(lParameter) { # param is mandatory
     Hide(welcomeLabel)
     Draw()
 
-    # perform test sequence
+    # perform testing test sequence
+    testTest <- 12
+    DoAudioTest(testTest, Nth(gTestData, testTest))
+
+    # perform main test sequence
     actualTest <- 1 # OMG program language starting at 1 WTF
     while (actualTest < 11) {
         DoAudioTest(actualTest, Nth(gTestData, actualTest))
