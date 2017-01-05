@@ -40,11 +40,6 @@ define DoAudioTest(number) {
 
     Stop(sound) # forget this and pebl crashes
 
-    # TODO: geht so leider nicht, PEBL saugt
-    #RandomizeTimer() # Seed RNG with the current time.
-    #i <- RandomDiscrete(number)   # Generate a random number between 1 and number
-    # get louder at timepoint # mit PEBL no chance
-
     Hide(confirmLabel)
     Draw()
 }
@@ -56,11 +51,10 @@ define Start(lParameter) { # param is mandatory
     gWindow <- MakeWindow("grey")
 
     # make test data to be filled
-
     gTestData <- []
 
     # splash screen
-    smiley <- MakeImage("smiley-big.png") # fuckin ugly smiley
+    smiley <- MakeImage("smiley-big.png")
     AddObject(smiley, gWindow)
     Move(smiley, gVideoWidth / 2, gVideoHeight / 2 - 100)
 
@@ -77,7 +71,7 @@ define Start(lParameter) { # param is mandatory
     DoAudioTest(testTest)
 
     # perform main test sequence
-    actualTest <- 1 # OMG program language starting at 1 WTF
+    actualTest <- 1 # OMG program language starting at 1
     while (actualTest < 11) {
         DoAudioTest(actualTest)
         actualTest <- actualTest + 1
