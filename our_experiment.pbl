@@ -57,7 +57,7 @@ define Start(lParameter) { # param is mandatory
     gWindow <- MakeWindow("grey")
 
     # make test data to be filled
-    gTestData <- Repeat(MakeCustomObject("JND"), 10)
+    gTestData <- Repeat(MakeCustomObject("JND"), 12)
     loop(data, gTestData) {
         data.jndTime <- 0  # assign defaulted property
         Print(data) # debug
