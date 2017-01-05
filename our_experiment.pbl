@@ -35,7 +35,7 @@ define DoAudioTest(number) {
         PushOnEnd(gTestData, endTime - startTime)
     } else {
         # invalidate test
-        # atm jndTime stays zero
+        PushOnEnd(gTestData, 0)
     }
 
     Stop(sound) # forget this and pebl crashes
