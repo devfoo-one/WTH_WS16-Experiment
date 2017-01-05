@@ -88,6 +88,22 @@ define Start(lParameter) { # param is mandatory
         actualTest <- actualTest + 1
     }
 
+    # save received data
+    RandomizeTimer()
+    fileBuster <- RandomDiscrete(1000)
+    if (FileExists("data.dat")) {
+        dataFile <- FileOpenAppend("data.dat")
+        FilePrint(dataFile, "BIATCH")
+        FileClose(dataFile)
+    } else {
+        dataFile <- FileOpenWrite("data.dat")
+        FilePrint(dataFile, "BIATCH")
+        FileClose(dataFile)
+    }
+
+
+    
+
     # epilog
     goodbyeLabel <- EasyLabel("Thanks for participation", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
     Draw()
