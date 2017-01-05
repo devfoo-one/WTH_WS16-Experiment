@@ -1,5 +1,5 @@
 # one test run
-define DoAudioTest(number, data) {
+define DoAudioTest(number) {
 
     # setup audio file for test
     sound <- LoadSound("sine_100Hz.wav") # dont know how to define undefineds
@@ -15,7 +15,7 @@ define DoAudioTest(number, data) {
     if (number ==  9) { sound <- LoadSound("sine_3300Hz.wav") }
     if (number == 10) { sound <- LoadSound("sine_3700Hz.wav") }
     if (number == 11) { sound <- LoadSound("sine_4100Hz.wav") }
-   
+
     if (number == 0) {
         confirmLabel <- EasyLabel("Test run: Press A if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
         Draw()
@@ -32,8 +32,7 @@ define DoAudioTest(number, data) {
 
     if (response == "a") {
         endTime <- GetTime()
-        data.jndTime <- endTime - startTime
-        Print(data.jndTime)
+        PushOnEnd(gTestData, endTime - startTime)
     } else {
         # invalidate test
         # atm jndTime stays zero
@@ -57,11 +56,8 @@ define Start(lParameter) { # param is mandatory
     gWindow <- MakeWindow("grey")
 
     # make test data to be filled
-    gTestData <- Repeat(MakeCustomObject("JND"), 10)
-    loop(data, gTestData) {
-        data.jndTime <- 0  # assign defaulted property
-        Print(data) # debug
-    }
+
+    gTestData <- []
 
     # splash screen
     smiley <- MakeImage("smiley-big.png") # fuckin ugly smiley
@@ -78,36 +74,26 @@ define Start(lParameter) { # param is mandatory
 
     # perform testing test sequence
     testTest <- 0
-    dummy <- MakeCustomObject("DUMMY")
-    DoAudioTest(testTest, dummy)
+    DoAudioTest(testTest)
 
     # perform main test sequence
     actualTest <- 1 # OMG program language starting at 1 WTF
     while (actualTest < 11) {
-        DoAudioTest(actualTest, Nth(gTestData, actualTest))
+        DoAudioTest(actualTest)
         actualTest <- actualTest + 1
     }
 
     # save received data
     RandomizeTimer()
     fileBuster <- RandomDiscrete(1000000)
-    if (FileExists(fileBuster + "data.dat")) {
-        dataFile <- FileOpenAppend(fileBuster + "data.dat")
-        FilePrint(dataFile, "test row")
-        loop(data, gTestData) {
-            FilePrint(dataFile, data.jndTime)
-        }
-        FilePrint(dataFile, "test row end")
-        FileClose(dataFile)
-    } else {
-        dataFile <- FileOpenWrite(fileBuster + "data.dat")
-        FilePrint(dataFile, "test row")
-        loop(data, gTestData) {
-            FilePrint(dataFile, data.jndTime)
-        }
-        FilePrint(dataFile, "test row end")
-        FileClose(dataFile)
+    dataFile <- FileOpenWrite(fileBuster + "data.dat")
+    FilePrint(dataFile, "test row")
+    loop(data, gTestData) {
+        FilePrint(dataFile, data)
     }
+    FilePrint(dataFile, "test row end")
+    FileClose(dataFile)
+
 
     # epilog
     goodbyeLabel <- EasyLabel("Thanks for participation", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
