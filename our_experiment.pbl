@@ -53,17 +53,30 @@ define Start(lParameter) { # param is mandatory
     # make test data to be filled
     gTestData <- []
 
-    # splash screen
+    # splash screen, plz tell me pebl can do better
     smiley <- MakeImage("smiley-big.png")
     AddObject(smiley, gWindow)
-    Move(smiley, gVideoWidth / 2, gVideoHeight / 2 - 100)
+    Move(smiley, gVideoWidth / 2, gVideoHeight / 2 - 350)
+    descriptionLabel1 <- EasyLabel("This experiment tests the users ability to notice a minor",     gVideoWidth / 2, gVideoHeight / 2 - 5*48, gWindow, 44)
+    descriptionLabel2 <- EasyLabel("difference in amplitude on multiple static sine sounds.",       gVideoWidth / 2, gVideoHeight / 2 - 4*48, gWindow, 44)
+    descriptionLabel3 <- EasyLabel("The user is supposed to press the button 'A'",                  gVideoWidth / 2, gVideoHeight / 2 - 2*48, gWindow, 44)
+    descriptionLabel4 <- EasyLabel("once a change in amplitude is noticed. ",                       gVideoWidth / 2, gVideoHeight / 2 - 1*48, gWindow, 44)
+    descriptionLabel5 <- EasyLabel("After the press of the button, the next sine sound",            gVideoWidth / 2, gVideoHeight / 2 + 0*48, gWindow, 44)
+    descriptionLabel6 <- EasyLabel(" is being played, where the user again presses the button 'A'", gVideoWidth / 2, gVideoHeight / 2 + 1*48, gWindow, 44)
+    descriptionLabel7 <- EasyLabel("once a change in amplitude is noticed.",                        gVideoWidth / 2, gVideoHeight / 2 + 2*48, gWindow, 44)
+    descriptionLabel8 <- EasyLabel("Press any key to start the tests",                              gVideoWidth / 2, gVideoHeight / 2 + 5*48, gWindow, 44)
 
-    welcomeLabel <- EasyLabel("Press any key to start the tests", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
     Draw()
     WaitForAnyKeyPress()
-
+    Hide(descriptionLabel1)
+    Hide(descriptionLabel2)
+    Hide(descriptionLabel3)
+    Hide(descriptionLabel4)
+    Hide(descriptionLabel5)
+    Hide(descriptionLabel6)
+    Hide(descriptionLabel7)
+    Hide(descriptionLabel8)
     Hide(smiley) # HINT hides not yet, call draw to perform any graphical changes
-    Hide(welcomeLabel)
     Draw()
 
     # perform testing test sequence
@@ -92,5 +105,5 @@ define Start(lParameter) { # param is mandatory
     # epilog
     goodbyeLabel <- EasyLabel("Thanks for participation", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
     Draw()
-    Wait(100)
+    Wait(3000)
 }
