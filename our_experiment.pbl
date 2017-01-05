@@ -90,7 +90,7 @@ define Start(lParameter) { # param is mandatory
 
     # save received data
     RandomizeTimer()
-    fileBuster <- RandomDiscrete(1000)
+    fileBuster <- RandomDiscrete(1000000)
     if (FileExists(fileBuster + "data.dat")) {
         dataFile <- FileOpenAppend(fileBuster + "data.dat")
         FilePrint(dataFile, "test row")
