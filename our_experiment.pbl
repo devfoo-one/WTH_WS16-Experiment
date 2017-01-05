@@ -2,6 +2,7 @@
 define DoAudioTest(number, frequency, data) {
 
     # setup audio file for test
+    sound <- LoadSound("sine_100Hz.wav")
     if (number ==  1) { sound <- LoadSound("sine_100Hz.wav") }
     if (number ==  2) { sound <- LoadSound("sine_500Hz.wav") }
     if (number ==  3) { sound <- LoadSound("sine_900Hz.wav") }
@@ -14,6 +15,7 @@ define DoAudioTest(number, frequency, data) {
     if (number == 10) { sound <- LoadSound("sine_3700Hz.wav") }
     if (number == 11) { sound <- LoadSound("sine_4100Hz.wav") }
      
+    sound <- LoadSound("sine_100Hz.wav")
 
     confirmLabel <- EasyLabel("Test " + number + ": Press A if you hear a sound", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
     Draw()
