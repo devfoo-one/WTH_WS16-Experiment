@@ -91,18 +91,23 @@ define Start(lParameter) { # param is mandatory
     # save received data
     RandomizeTimer()
     fileBuster <- RandomDiscrete(1000)
-    if (FileExists("data.dat")) {
-        dataFile <- FileOpenAppend("data.dat")
-        FilePrint(dataFile, "BIATCH")
+    if (FileExists(fileBuster + "data.dat")) {
+        dataFile <- FileOpenAppend(fileBuster + "data.dat")
+        FilePrint(dataFile, "test row")
+        loop(data, gTestData) {
+            FilePrint(dataFile, data.jndTime)
+        }
+        FilePrint(dataFile, "test row end")
         FileClose(dataFile)
     } else {
-        dataFile <- FileOpenWrite("data.dat")
-        FilePrint(dataFile, "BIATCH")
+        dataFile <- FileOpenWrite(fileBuster + "data.dat")
+        FilePrint(dataFile, "test row")
+        loop(data, gTestData) {
+            FilePrint(dataFile, data.jndTime)
+        }
+        FilePrint(dataFile, "test row end")
         FileClose(dataFile)
     }
-
-
-    
 
     # epilog
     goodbyeLabel <- EasyLabel("Thanks for participation", gVideoWidth / 2, gVideoHeight / 2, gWindow, 44)
