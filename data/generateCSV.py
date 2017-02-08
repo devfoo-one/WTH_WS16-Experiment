@@ -5,10 +5,12 @@ Data files must be stored in directories named like DDD-dd (i.e. jan-20)
 
 import os, re, csv, time, string
 
+
 def getAsciiIdString(n):
-    first =  string.ascii_lowercase[int(n / 26)]
+    first = string.ascii_lowercase[int(n / 26)]
     second = string.ascii_lowercase[n % 26]
-    return first+second
+    return first + second
+
 
 # __time_str = str(int(time.time()))
 # data_filename = 'data' + __time_str + '.csv'
@@ -40,7 +42,6 @@ with open(data_filename, 'w') as data_file:
             for i, datapoint in enumerate(lines):
                 data[frequencies[i]].append(datapoint)
 
-
 with open(data_plot_filename, 'w') as data_plot_file:
     data_plot_writer = csv.writer(data_plot_file)
     id_characters = []
@@ -48,9 +49,6 @@ with open(data_plot_filename, 'w') as data_plot_file:
         print(i, getAsciiIdString(i))
         id_characters.append(getAsciiIdString(i))
 
-    # id_characters = getAsciiIdString()list(string.ascii_lowercase[0:len(data[100])])  # get id characters
     data_plot_writer.writerow(('frequenz',) + tuple(id_characters))
     for f in frequencies:
         data_plot_writer.writerow((f,) + tuple(data[f]))
-        print(f, data[f])
-
